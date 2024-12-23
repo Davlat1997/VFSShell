@@ -16,7 +16,7 @@ typedef struct Node {
 Node *root = NULL;
 Node *current = NULL;
 
-// utils
+
 void init();
 void prompt();
 Node *create_node(char *name, int is_file);
@@ -24,7 +24,7 @@ void insert_node(Node *node);
 Node* search_node(char *name);
 void path(Node *node);
 
-// commands
+
 void mkdir(char *name);
 void touch(char *name);
 void ls();
@@ -65,6 +65,9 @@ int main() {
             find(current, arg);
         } else if (strcmp(command, "tree") == 0) {
             tree(current, 0);
+        } else if (strcmp(command, "exit") == 0) { // "exit" komanda
+            printf("Chiqilmoqda...\n");
+            break;
         } else {
             printf("vfsshell: command not found: %s\n", command);
         }
@@ -93,7 +96,7 @@ void prompt() {
 
 Node *create_node(char *name, int is_file) {
     Node *node = malloc(sizeof(Node));
-    
+
     strcpy(node->name, name);
     node->is_file    = is_file;
     node->created_at = time(NULL);
@@ -206,7 +209,6 @@ void tree(Node *node, int level) {
         printf("\t");
     }
     print_node(node);
-
     if (node->child != NULL) {
         tree(node->child, level + 1);
     }
